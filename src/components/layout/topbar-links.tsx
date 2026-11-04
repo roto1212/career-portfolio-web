@@ -1,12 +1,16 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
-const SECTIONS = ['skills', 'career', 'projects', 'contact'] as const
+const BASE_SECTIONS = ['skills', 'career', 'projects'] as const
 
 /** 상단 섹션 링크 + 스크롤 위치에 따른 활성 표시 (scroll spy) */
-export function TopbarLinks() {
+export function TopbarLinks({ hasSide = false }: { hasSide?: boolean }) {
   const [active, setActive] = useState<string | null>(null)
+  const SECTIONS = useMemo(
+    () => [...BASE_SECTIONS, ...(hasSide ? ['side'] : []), 'contact'],
+    [hasSide]
+  )
 
   useEffect(() => {
     const nodes = SECTIONS.map(id => document.getElementById(id)).filter(
@@ -38,7 +42,7 @@ export function TopbarLinks() {
       observer.disconnect()
       window.removeEventListener('scroll', onScroll)
     }
-  }, [])
+  }, [SECTIONS])
 
   return (
     <nav className="toplinks" aria-label="섹션 이동">

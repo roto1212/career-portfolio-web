@@ -4,13 +4,13 @@ import { TopbarLinks } from './topbar-links'
 
 const STATUS_LABEL = 'R&D · FastAPI + Vue'
 
-export function Header() {
+export function Header({ hasSide = false }: { hasSide?: boolean }) {
   return (
     <header className="topbar">
       <Link href="#top" className="brand">
         sdb<span className="dim">.log</span>
       </Link>
-      <TopbarLinks />
+      <TopbarLinks hasSide={hasSide} />
       <span className="status-pill">
         <span className="dot" aria-hidden="true" />
         <span className="status-label">{STATUS_LABEL}</span>

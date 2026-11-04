@@ -3,6 +3,7 @@ import { ChangelogSection } from '@/components/sections/changelog'
 import { ContactSection } from '@/components/sections/contact'
 import { HeroSection } from '@/components/sections/hero'
 import { ProjectsSection } from '@/components/sections/pinned-projects'
+import { SideProjectsSection } from '@/components/sections/side-projects'
 import { RevealEffects } from '@/components/sections/reveal-effects'
 import { SkillsSection } from '@/components/sections/skills-diff'
 import { getPortfolio } from '@/lib/notion/queries'
@@ -10,7 +11,7 @@ import { getPortfolio } from '@/lib/notion/queries'
 export const revalidate = 3600
 
 export default async function Home() {
-  const { profile, featured, skills, changelog, projects } =
+  const { profile, featured, skills, changelog, projects, sideProjects } =
     await getPortfolio()
   const now = new Date()
   const buildDate = now.toLocaleDateString('sv-SE', { timeZone: 'Asia/Seoul' })
@@ -20,12 +21,15 @@ export default async function Home() {
       <a className="skip-link" href="#top">
         본문 바로가기
       </a>
-      <Header />
+      <Header hasSide={sideProjects.length > 0} />
       <main>
         <HeroSection profile={profile} featured={featured} now={now} />
         <SkillsSection skills={skills} />
         <ChangelogSection changelog={changelog} now={now} />
         <ProjectsSection projects={projects} now={now} />
+        {sideProjects.length > 0 && (
+          <SideProjectsSection projects={sideProjects} now={now} />
+        )}
       </main>
       <ContactSection email={profile.email} buildDate={buildDate} />
       <RevealEffects />

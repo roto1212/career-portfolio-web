@@ -23,6 +23,7 @@ export type Org = {
 
 export type ProjectStatus = 'done' | 'rc' | 'planned'
 export type ProjectSize = 'large' | 'small'
+export type ProjectKind = 'work' | 'side'
 
 export type StarBlock = { s: string; t: string; a: string; r: string }
 
@@ -43,6 +44,8 @@ export type Project = {
   note: string
   pinned: boolean
   order: number
+  kind: ProjectKind // 빈 값은 work
+  origin: string // 시작 계기 (side 카드에 노출)
 }
 
 export type PinnedProject = Project & { star: StarBlock }
@@ -92,5 +95,6 @@ export type Portfolio = {
   skills: { hunk: string; rows: Skill[] }[]
   changelog: ChangelogEntry[]
   projects: PinnedProject[]
+  sideProjects: PinnedProject[]
   featured: Achievement | null
 }

@@ -605,6 +605,13 @@ footer.contact {
   line-height: 1.55;
 }
 
+.repo-origin {
+  margin-top: 0.35rem;
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
 .repo-meta {
   margin-top: 0.8rem;
   display: flex;

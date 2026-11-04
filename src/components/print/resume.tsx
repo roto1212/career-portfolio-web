@@ -66,7 +66,8 @@ function SkillRow({ row }: { row: Skill }) {
 }
 
 export function Resume({ data, now }: { data: Portfolio; now: Date }) {
-  const { profile, featured, skills, changelog, orgs, projects } = data
+  const { profile, featured, skills, changelog, orgs, projects, sideProjects } =
+    data
   const stats = [
     {
       cmd: '$ career --uptime',
@@ -262,6 +263,24 @@ export function Resume({ data, now }: { data: Portfolio; now: Date }) {
           </article>
         ))}
       </div>
+
+      {sideProjects.length > 0 && (
+        <div className="r-sec r-sec-side">
+          <SectionTitle eyebrow="04" title="side" />
+          {sideProjects.map(p => (
+            <article className="star-card" key={p.id}>
+              <div className="star-head">
+                <h3 className="repo">{p.name}</h3>
+                <span className="star-period">
+                  {formatPeriod(p.start, p.end, 'present')}
+                </span>
+              </div>
+              <p className="star-desc">{p.cardDesc}</p>
+              {p.origin && <p className="star-desc">출발점 · {p.origin}</p>}
+            </article>
+          ))}
+        </div>
+      )}
 
       <footer className="r-foot">
         생성일 {date} · {profile.siteUrl.replace(/^https?:\/\//, '')}

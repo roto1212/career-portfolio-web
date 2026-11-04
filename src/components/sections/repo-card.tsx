@@ -37,6 +37,9 @@ export function RepoCard({
           </span>
         </div>
         <p className="repo-desc">{project.cardDesc}</p>
+        {project.origin && (
+          <p className="repo-origin">출발점 · {project.origin}</p>
+        )}
         <div className="repo-meta">
           {project.stack.map(t => (
             <span className="tech" key={t}>

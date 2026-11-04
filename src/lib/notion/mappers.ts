@@ -15,6 +15,7 @@ import type {
   Org,
   Profile,
   Project,
+  ProjectKind,
   ProjectSize,
   ProjectStatus,
   Skill,
@@ -77,6 +78,8 @@ export function mapProject(page: PageObjectResponse): Project {
     note: text(page, 'Note'),
     pinned: checkbox(page, 'Pinned'),
     order: num(page, 'Order'),
+    kind: oneOf<ProjectKind>(select(page, 'Kind'), ['work', 'side'], 'work'),
+    origin: text(page, 'Origin'),
   }
 }
 

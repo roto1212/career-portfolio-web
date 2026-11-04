@@ -12,6 +12,7 @@ Notion 개인 워크스페이스 "Career" → 페이지 "Career Portfolio" 아�
 
 - 변경 이력 = Orgs(major) + `Ver`가 있는 Projects (Size large=minor / small=patch). `Ver`는 숫자로 파싱해 정렬한다.
 - 핀 카드 = `Pinned`인 Projects, 본문의 `## S/T/A/R — …` H2 블록이 STAR 패널이 된다.
+- `Kind`(work/side): 빈 값은 work. side는 회사 업무 외 프로젝트로, 변경 이력(`Ver`)에서 제외되고 `Pinned`인 행이 "side" 섹션 카드가 된다. `Origin`은 카드에 한 줄로 노출되는 시작 계기.
 - Skills 본문의 "라벨 URL" 줄은 수료증 링크가 된다.
 - 갱신: 기본 1시간 ISR, 즉시 반영은 `POST /api/revalidate` (`Authorization: Bearer $REVALIDATE_SECRET`).
 

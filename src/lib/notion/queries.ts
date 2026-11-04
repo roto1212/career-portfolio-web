@@ -102,7 +102,7 @@ async function loadPortfolio(): Promise<Portfolio> {
         note: '',
       })),
     ...projects
-      .filter(p => p.ver)
+      .filter(p => p.ver && p.kind === 'work')
       .map<ChangelogEntry>(p => ({
         ver: p.ver,
         kind: p.size === 'large' ? 'minor' : 'patch',
@@ -115,17 +115,18 @@ async function loadPortfolio(): Promise<Portfolio> {
       })),
   ].sort((a, b) => compareVerDesc(a.ver, b.ver))
 
-  // 핀 카드: STAR 본문은 페이지 마크다운에서 추출
-  const pinned = projects
-    .filter(p => p.pinned)
-    .sort((a, b) => a.order - b.order)
-  const pinnedWithStar = await mapLimited<
-    (typeof pinned)[number],
-    PinnedProject
-  >(pinned, async p => ({
-    ...p,
-    star: parseStar(await pageMarkdown(p.id)),
-  }))
+  // 핀 카드(회사 업무)와 Side 프로젝트: STAR 본문은 페이지 마크다운에서 추출
+  const withStar = (list: typeof projects) =>
+    mapLimited<(typeof projects)[number], PinnedProject>(list, async p => ({
+      ...p,
+      star: parseStar(await pageMarkdown(p.id)),
+    }))
+  const pinnedOf = (kind: 'work' | 'side') =>
+    projects
+      .filter(p => p.pinned && p.kind === kind)
+      .sort((a, b) => a.order - b.order)
+  const pinnedWithStar = await withStar(pinnedOf('work'))
+  const sideWithStar = await withStar(pinnedOf('side'))
 
   // 스킬: 수료증 링크는 페이지 본문에서 추출
   const skills = await mapLimited(skillPages.map(mapSkill), async s => ({
@@ -149,6 +150,7 @@ async function loadPortfolio(): Promise<Portfolio> {
     skills: [...groups].map(([hunk, rows]) => ({ hunk, rows })),
     changelog,
     projects: pinnedWithStar,
+    sideProjects: sideWithStar,
     featured,
   }
 }
