@@ -1,0 +1,585 @@
+/* A4 이력서(/print) 전용 스타일 — profile/print.css 이식. 모든 선택자는 .print-page 하위로 한정 */
+.print-page {
+  --ink: #1a1d1b;
+  --ink-soft: #444941;
+  --muted: #767b72;
+  --line: #d3d7ce;
+
+  --add: #14784f;
+  --add-bg: rgba(30, 158, 107, 0.1);
+  --legacy: #54579a;
+  --legacy-bg: rgba(99, 102, 166, 0.1);
+  --rc: #9a6a1c;
+  --rc-bg: rgba(198, 138, 46, 0.14);
+
+  --mono:
+    ui-monospace, 'Cascadia Code', 'JetBrains Mono', 'D2Coding',
+    'SFMono-Regular', Consolas, Menlo, monospace;
+  --sans:
+    var(--font-pretendard), 'Pretendard Variable', Pretendard, -apple-system,
+    BlinkMacSystemFont, 'Malgun Gothic', 'Apple SD Gothic Neo', system-ui,
+    sans-serif;
+}
+@page {
+  size: A4;
+  margin: 15mm 14mm 17mm;
+
+  @bottom-center {
+    content: counter(page) ' / ' counter(pages);
+    font-family: 'Pretendard Variable', Pretendard, 'Malgun Gothic', sans-serif;
+    font-size: 8pt;
+    color: #767b72;
+  }
+}
+.print-page * {
+  box-sizing: border-box;
+}
+html {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.print-page {
+  min-height: 100vh;
+  margin: 0;
+  background: #e4e7df;
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 9.5pt;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+.print-page h1,
+.print-page h2,
+.print-page h3,
+.print-page h4,
+.print-page p,
+.print-page ul,
+.print-page ol,
+.print-page dl,
+.print-page dd {
+  margin: 0;
+  padding: 0;
+}
+.print-page ul,
+.print-page ol {
+  list-style: none;
+}
+.print-page a {
+  color: inherit;
+}
+.print-page .toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 18px;
+  background: #1a1d1b;
+  color: #eceee9;
+  font-family: var(--mono);
+  font-size: 12.5px;
+}
+.print-page .tb-link {
+  color: #b9bdb4;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.print-page .tb-link:hover {
+  color: #fff;
+}
+.print-page .tb-hint {
+  flex: 1;
+  font-family: var(--sans);
+  font-size: 12px;
+  color: #9aa095;
+}
+.print-page .tb-hint b {
+  color: #dfe3da;
+  font-weight: 600;
+}
+.print-page .tb-btn {
+  font: inherit;
+  font-weight: 700;
+  color: #1a1d1b;
+  background: #3fc088;
+  border: 0;
+  border-radius: 3px;
+  padding: 7px 14px;
+  cursor: pointer;
+}
+.print-page .tb-btn:hover {
+  background: #5ad2a0;
+}
+.print-page .sheet {
+  width: 210mm;
+  margin: 16px auto 40px;
+  padding: 16mm 15mm;
+  background: #fff;
+  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.18);
+}
+.print-page .r-loading {
+  color: var(--muted);
+  padding: 20mm 0;
+  text-align: center;
+}
+.print-page .r-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 8mm;
+  padding-bottom: 4mm;
+  border-bottom: 2pt solid var(--ink);
+}
+.print-page .r-name {
+  font-size: 24pt;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+.print-page .r-role {
+  margin-top: 1.5mm;
+  font-size: 10pt;
+  color: var(--ink-soft);
+}
+.print-page .r-role > span {
+  display: block;
+}
+.print-page .r-arrow {
+  font-family: var(--mono);
+  color: var(--add);
+}
+.print-page .r-contact {
+  text-align: right;
+  font-family: var(--mono);
+  font-size: 8.5pt;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  flex: none;
+}
+.print-page .r-contact a {
+  text-decoration: none;
+}
+.print-page .r-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 4mm;
+  border: 0.6pt solid var(--line);
+  break-inside: avoid;
+}
+.print-page .r-stat {
+  padding: 2.4mm 3.2mm;
+}
+.print-page .r-stat + .r-stat {
+  border-left: 0.6pt solid var(--line);
+}
+.print-page .r-stat dt {
+  font-family: var(--mono);
+  font-size: 7pt;
+  color: var(--muted);
+}
+.print-page .r-stat dd {
+  margin-top: 0.8mm;
+  font-family: var(--mono);
+  font-size: 11pt;
+  font-weight: 600;
+}
+.print-page .r-stat-note {
+  display: block;
+  font-family: var(--sans);
+  font-size: 7pt;
+  font-weight: 400;
+  color: var(--muted);
+}
+.print-page .r-sec {
+  margin-top: 8mm;
+}
+.print-page .r-sec-projects {
+  break-before: page;
+  margin-top: 0;
+}
+.print-page .r-h2 {
+  display: flex;
+  align-items: baseline;
+  gap: 2mm;
+  margin-bottom: 3mm;
+  padding-bottom: 1.2mm;
+  border-bottom: 1.2pt solid var(--ink);
+  font-family: var(--mono);
+  font-size: 12pt;
+  font-weight: 700;
+  break-after: avoid;
+}
+.print-page .r-eyebrow {
+  font-size: 8.5pt;
+  font-weight: 600;
+  color: var(--muted);
+}
+.print-page .r-ext {
+  color: var(--muted);
+  font-weight: 500;
+}
+.print-page .r-note {
+  margin-bottom: 1mm;
+  font-size: 8pt;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.print-page .r-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1mm 5mm;
+  margin-bottom: 1mm;
+  font-size: 7.8pt;
+  color: var(--ink-soft);
+}
+.print-page .r-legend .mk {
+  display: inline-block;
+  width: 3.2mm;
+  text-align: center;
+  font-family: var(--mono);
+}
+.print-page .r-legend .add .mk {
+  color: var(--add);
+}
+.print-page .r-legend .rc .mk {
+  color: var(--rc);
+}
+.print-page .r-legend .lv {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 7.2pt;
+  color: var(--muted);
+}
+.print-page .hunk {
+  margin-top: 3.2mm;
+  break-inside: avoid;
+}
+.print-page .hunk-h {
+  padding: 1mm 2.4mm;
+  font-family: var(--mono);
+  font-size: 8.2pt;
+  font-weight: 600;
+  color: var(--legacy);
+  background: var(--legacy-bg);
+  break-after: avoid;
+}
+.print-page .r-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 8.8pt;
+}
+.print-page .c-mk {
+  width: 6mm;
+}
+.print-page .c-nm {
+  width: 40mm;
+}
+.print-page .c-lv {
+  width: 13mm;
+}
+.print-page .r-table td {
+  padding: 1.1mm 1.6mm;
+  vertical-align: top;
+  border-bottom: 0.4pt solid var(--line);
+}
+.print-page .r-table tr {
+  break-inside: avoid;
+}
+.print-page .r-table tr.add td {
+  background: var(--add-bg);
+}
+.print-page .r-table tr.rc td {
+  background: var(--rc-bg);
+}
+.print-page .r-table .mk {
+  font-family: var(--mono);
+  font-weight: 700;
+  text-align: center;
+  color: var(--muted);
+}
+.print-page .r-table .add .mk {
+  color: var(--add);
+}
+.print-page .r-table .rc .mk {
+  color: var(--rc);
+}
+.print-page .r-table .nm {
+  font-family: var(--mono);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.print-page .r-table .lv {
+  font-family: var(--mono);
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+}
+.print-page .r-table .nt {
+  color: var(--ink-soft);
+  font-size: 8.4pt;
+}
+.print-page .courses {
+  margin-top: 0.8mm;
+  font-size: 7.6pt;
+  color: var(--muted);
+  line-height: 1.45;
+}
+.print-page .courses a {
+  color: var(--rc);
+  text-decoration: underline;
+  text-underline-offset: 1.5pt;
+}
+.print-page .org {
+  margin-top: 5mm;
+}
+.print-page .org-head {
+  display: flex;
+  align-items: baseline;
+  gap: 3mm;
+  padding-bottom: 1mm;
+  border-bottom: 0.6pt solid var(--ink);
+  break-after: avoid;
+}
+.print-page .org-name {
+  font-size: 11.5pt;
+  font-weight: 700;
+}
+.print-page .org-role {
+  font-size: 8.8pt;
+  color: var(--ink-soft);
+}
+.print-page .org-period {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 8pt;
+  color: var(--muted);
+}
+.print-page .proj {
+  margin-top: 3mm;
+  padding-left: 3.2mm;
+  border-left: 1.4pt solid var(--line);
+  break-inside: avoid;
+}
+.print-page .proj-major {
+  border-left-color: var(--legacy);
+}
+.print-page .proj-minor {
+  border-left-color: #a9ada3;
+}
+.print-page .proj-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.6mm 2.4mm;
+  break-after: avoid;
+}
+.print-page .ver {
+  font-family: var(--mono);
+  font-size: 8.4pt;
+  font-weight: 700;
+}
+.print-page .proj-title {
+  font-size: 10pt;
+  font-weight: 700;
+}
+.print-page .proj-period {
+  margin-left: auto;
+  font-size: 8pt;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.print-page .proj-body {
+  margin-top: 0.8mm;
+  font-size: 9pt;
+  color: var(--ink-soft);
+  orphans: 3;
+  widows: 3;
+}
+.print-page .proj-note {
+  margin-bottom: 0.6mm;
+  font-family: var(--mono);
+  font-size: 7.6pt;
+  color: var(--legacy);
+}
+.print-page .patches {
+  margin-top: 1.4mm;
+}
+.print-page .patches-h {
+  font-family: var(--mono);
+  font-size: 7.4pt;
+  color: var(--muted);
+}
+.print-page .patches li {
+  font-size: 8.5pt;
+  color: var(--ink-soft);
+  padding-left: 2.4mm;
+  text-indent: -2.4mm;
+}
+.print-page .patches li::before {
+  content: '· ';
+  color: var(--muted);
+}
+.print-page .patches .ver {
+  font-size: 7.8pt;
+  color: var(--muted);
+}
+.print-page .patches .pp {
+  color: var(--muted);
+  font-size: 8pt;
+}
+.print-page .tag,
+.print-page .badge {
+  font-family: var(--mono);
+  font-size: 6.8pt;
+  font-weight: 700;
+  padding: 0.2mm 1.8mm;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.print-page .tag-done,
+.print-page .badge-done {
+  color: var(--add);
+  background: var(--add-bg);
+}
+.print-page .tag-rc,
+.print-page .badge-active,
+.print-page .badge-rc {
+  color: var(--rc);
+  background: var(--rc-bg);
+}
+.print-page .tag-planned {
+  color: var(--legacy);
+  background: var(--legacy-bg);
+}
+.print-page .star-card {
+  margin-top: 4mm;
+  padding: 3.2mm 3.6mm;
+  border: 0.6pt solid var(--line);
+  border-radius: 1mm;
+  break-inside: avoid;
+}
+.print-page .star-card:first-of-type {
+  margin-top: 0;
+}
+.print-page .star-head {
+  display: flex;
+  align-items: center;
+  gap: 2.4mm;
+  break-after: avoid;
+}
+.print-page .repo {
+  font-family: var(--mono);
+  font-size: 10.5pt;
+  font-weight: 700;
+}
+.print-page .star-period {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 8pt;
+  color: var(--muted);
+}
+.print-page .star-desc {
+  margin-top: 1.2mm;
+  font-size: 9pt;
+  color: var(--ink-soft);
+}
+.print-page .star-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1mm;
+  margin-top: 1.6mm;
+}
+.print-page .tech {
+  padding: 0.2mm 1.8mm;
+  border: 0.5pt solid var(--line);
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 7.4pt;
+  color: var(--ink-soft);
+}
+.print-page .star-grid {
+  margin-top: 2.2mm;
+  padding-top: 0.6mm;
+  border-top: 0.5pt solid var(--line);
+}
+.print-page .star-row {
+  display: grid;
+  grid-template-columns: 13mm 1fr;
+  gap: 2mm;
+  margin-top: 1.8mm;
+  break-inside: avoid;
+}
+.print-page .star-row dt {
+  font-family: var(--mono);
+  font-size: 9pt;
+  font-weight: 700;
+  color: var(--legacy);
+  line-height: 1.3;
+}
+.print-page .star-row dt small {
+  display: block;
+  font-family: var(--sans);
+  font-size: 6.8pt;
+  font-weight: 500;
+  color: var(--muted);
+}
+.print-page .star-row dd {
+  font-size: 9pt;
+  color: var(--ink-soft);
+  line-height: 1.55;
+  orphans: 3;
+  widows: 3;
+}
+.print-page .r-foot {
+  margin-top: 7mm;
+  padding-top: 2mm;
+  border-top: 0.6pt solid var(--line);
+  font-size: 7.5pt;
+  color: var(--muted);
+}
+.print-page .period-elapsed {
+  white-space: nowrap;
+}
+@media print {
+  .print-page {
+    background: #fff;
+  }
+  .print-page .no-print {
+    display: none !important;
+  }
+  .print-page .sheet {
+    width: auto;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+  .print-page a {
+    text-decoration: none;
+  }
+  .print-page .courses a {
+    text-decoration: underline;
+  }
+}
+@media screen and (max-width: 215mm) {
+  .print-page .sheet {
+    width: auto;
+    margin: 0;
+    padding: 14px;
+    box-shadow: none;
+  }
+  .print-page .tb-hint {
+    display: none;
+  }
+  .print-page .toolbar {
+    justify-content: space-between;
+  }
+  .print-page .r-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .print-page .r-contact {
+    text-align: left;
+  }
+}
