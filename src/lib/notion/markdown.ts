@@ -29,22 +29,32 @@ export function parseStar(markdown: string): StarBlock {
   return star
 }
 
-/** 스킬 본문의 "라벨 URL" 줄 → 수료증 링크. https 외 스킴은 버린다 */
+/**
+ * 스킬 본문의 수료증 줄 → 링크. `[강의명](URL)`, `라벨 [수료증](URL)`, `라벨 URL` 형식을 읽는다.
+ * https 외 스킴은 버린다
+ */
 export function parseCourses(
   markdown: string
 ): { label: string; url: string }[] {
   const courses: { label: string; url: string }[] = []
   for (const raw of markdown.split('\n')) {
-    const line = raw.trim()
-    if (!line || line === '---') continue
-    const mdLink = line.match(/^(.*?)\[[^\]]*\]\(([^)]+)\)\s*$/)
-    const label = mdLink ? mdLink[1].trim() : line.replace(/\s+\S+$/, '')
+    // 불릿(`- `)은 떼고, 줄 전체가 `[강의명](URL)` 한 개면 대괄호 안이 라벨이다
+    const line = raw.trim().replace(/^[-*]\s+/, '')
+    if (!line || line === '---' || line.startsWith('#')) continue
+    const wholeLink = line.match(/^\[((?:\\.|[^\]\\])+)\]\(([^)]+)\)$/)
+    const mdLink = wholeLink ?? line.match(/^(.*?)\[[^\]]*\]\(([^)]+)\)\s*$/)
+    const label = wholeLink
+      ? wholeLink[1].replace(/\\(.)/g, '$1')
+      : mdLink
+        ? mdLink[1].trim()
+        : line.replace(/\s+\S+$/, '')
     const rawUrl = mdLink ? mdLink[2] : (line.split(/\s+/).pop() ?? '')
     const url = /^https?:\/\//.test(rawUrl) ? rawUrl : `https://${rawUrl}`
     try {
       const parsed = new URL(url)
       if (parsed.protocol === 'https:' || parsed.protocol === 'http:') {
-        courses.push({ label: toPlain(label), url: parsed.toString() })
+        const text = toPlain(label)
+        if (text) courses.push({ label: text, url: parsed.toString() })
       }
     } catch {
       // 잘못된 URL은 건너뜀
