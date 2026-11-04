@@ -11,16 +11,20 @@ function toPlain(md: string): string {
     .trim()
 }
 
-/** 본문의 `## S — …` / `## T — …` / `## A — …` / `## R — …` 블록만 추출 */
+/**
+ * 본문의 `## S — …` / `## T — …` / `## A — …` / `## R — …` 블록만 추출한다.
+ * 헤딩 형식(대문자 한 글자 + 공백 + 대시)이 정확히 맞을 때만 STAR로 인정하므로,
+ * 그 외 헤딩(예: `## 상세 (비공개 메모)`) 아래 내용은 사이트에 노출되지 않는다.
+ */
 export function parseStar(markdown: string): StarBlock {
   const star: StarBlock = { s: '', t: '', a: '', r: '' }
   const parts = markdown.split(/^##\s+/m).slice(1)
   for (const part of parts) {
-    const key = part.charAt(0).toLowerCase()
-    if (key === 's' || key === 't' || key === 'a' || key === 'r') {
-      const body = part.slice(part.indexOf('\n') + 1)
-      star[key] = toPlain(body)
-    }
+    const match = part.match(/^([STAR])\s+[—–-]/)
+    if (!match) continue
+    const key = match[1].toLowerCase() as keyof StarBlock
+    const body = part.slice(part.indexOf('\n') + 1)
+    star[key] = toPlain(body)
   }
   return star
 }
