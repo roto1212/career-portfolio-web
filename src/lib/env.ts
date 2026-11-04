@@ -5,7 +5,7 @@ const envSchema = z.object({
     .enum(['development', 'production', 'test'])
     .default('development'),
   VERCEL_URL: z.string().optional(),
-  NEXT_PUBLIC_APP_URL: z.string().url().optional(),
+  APP_URL: z.string().url().optional(),
   // Notion CMS (서버 전용 — NEXT_PUBLIC 금지)
   NOTION_TOKEN: z.string().min(1),
   NOTION_ORGS_DS_ID: z.string().uuid(),
@@ -19,7 +19,7 @@ const envSchema = z.object({
 export const env = envSchema.parse({
   NODE_ENV: process.env.NODE_ENV,
   VERCEL_URL: process.env.VERCEL_URL,
-  NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
+  APP_URL: process.env.APP_URL,
   NOTION_TOKEN: process.env.NOTION_TOKEN,
   NOTION_ORGS_DS_ID: process.env.NOTION_ORGS_DS_ID,
   NOTION_PROJECTS_DS_ID: process.env.NOTION_PROJECTS_DS_ID,

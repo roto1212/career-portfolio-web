@@ -14,9 +14,7 @@ const DESCRIPTION =
   'PHP·Vanilla JS·MSSQL SI 5년에서 Python(FastAPI)·Vue.js 기반 R&D/AX 전환 중인 개발자 프로필'
 
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'
-  ),
+  metadataBase: new URL(process.env.APP_URL ?? 'http://localhost:3000'),
   title: '선대범 · career.log',
   description: `선대범 — ${DESCRIPTION}`,
   openGraph: {
